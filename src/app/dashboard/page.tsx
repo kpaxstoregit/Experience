@@ -1,11 +1,11 @@
 import {
-  Typography,
   Box,
-  Stack,
-  Card,
   Button,
+  Card,
   Grid,
-  Icon
+  Paper,
+  Stack,
+  Typography
 } from '@mui/material';
 
 export default function Home() {
@@ -17,7 +17,14 @@ export default function Home() {
   ];
 
   return (
-    <div>
+    <Paper
+      elevation={0} // Define a elevação para um fundo plano (pode ajustar)
+      sx={{
+        minHeight: '100vh',
+
+        justifyContent: 'center'
+      }}
+    >
       <Stack className='width-default'>
         <Box
           display={'flex'}
@@ -59,6 +66,6 @@ export default function Home() {
           </Grid>
         </Box>
       </Stack>
-    </div>
+    </Paper>
   );
 }

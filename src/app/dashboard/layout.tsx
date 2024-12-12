@@ -188,7 +188,6 @@ export default function RootLayout({
               component='main'
               sx={{
                 flexGrow: 1,
-                p: 3,
                 width: `calc(100% - ${
                   drawerOpen ? drawerWidth : collapsedDrawerWidth
                 }px)`,
