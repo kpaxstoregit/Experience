@@ -1,5 +1,7 @@
 'use client';
 
+import theme from '@/theme/theme';
+
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
@@ -29,7 +31,7 @@ import {
 } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const drawerWidth = 240;
 const collapsedDrawerWidth = 60;
@@ -62,9 +64,25 @@ export default function RootLayout({
     {}
   );
 
+  // Get theme from localStorage or use system preference
+  useEffect(() => {
+    const savedMode = localStorage.getItem('theme') || 'dark';
+    setDarkMode(savedMode === 'dark');
+  }, []);
+
+  // Toggle dark mode
   const toggleDarkMode = () => {
+    const newMode = darkMode ? 'light' : 'dark';
+    localStorage.setItem('theme', newMode);
     setDarkMode(!darkMode);
   };
+
+  // Create the theme dynamically based on the darkMode state
+  const theme = createTheme({
+    palette: {
+      mode: darkMode ? 'dark' : 'light'
+    }
+  });
 
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
@@ -76,12 +94,6 @@ export default function RootLayout({
       [menu]: !prev[menu]
     }));
   };
-
-  const theme = createTheme({
-    palette: {
-      mode: darkMode ? 'dark' : 'light'
-    }
-  });
 
   const drawer = (
     <div>

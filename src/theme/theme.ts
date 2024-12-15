@@ -28,10 +28,13 @@ const dark = {
   }
 };
 
-// Tipando `mode` como 'light' ou 'dark'
-const mode: 'light' | 'dark' = 'dark';
+const savedMode = localStorage.getItem('theme') || 'dark';
+console.log('savedMode', savedMode);
 
-const themePalette = mode === 'dark' ? dark : light;
+// Tipando `mode` como 'light' ou 'dark'
+const mode = savedMode === 'light' ? 'light' : 'dark';
+
+const themePalette = mode === 'light' ? light : dark;
 
 const theme = createTheme({
   palette: {
