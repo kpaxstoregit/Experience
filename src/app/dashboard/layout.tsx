@@ -1,7 +1,5 @@
 'use client';
 
-import theme from '@/theme/theme';
-
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
@@ -12,6 +10,7 @@ import LayersIcon from '@mui/icons-material/Layers';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpen from '@mui/icons-material/MenuOpen';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { getTheme } from '@/theme/theme';
 import '@/app/globals.css';
 import {
   AppBar,
@@ -77,12 +76,8 @@ export default function RootLayout({
     setDarkMode(!darkMode);
   };
 
-  // Create the theme dynamically based on the darkMode state
-  const theme = createTheme({
-    palette: {
-      mode: darkMode ? 'dark' : 'light'
-    }
-  });
+  // Cria o tema dinamicamente com base no estado atual
+  const theme = getTheme(darkMode ? 'dark' : 'light');
 
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);

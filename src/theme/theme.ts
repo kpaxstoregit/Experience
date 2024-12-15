@@ -28,33 +28,28 @@ const dark = {
   }
 };
 
-const savedMode = localStorage.getItem('theme') || 'dark';
-console.log('savedMode', savedMode);
+// Cria o tema com base no modo dinâmico
+export const getTheme = (mode: 'light' | 'dark') => {
+  const themePalette = mode === 'light' ? light : dark;
 
-// Tipando `mode` como 'light' ou 'dark'
-const mode = savedMode === 'light' ? 'light' : 'dark';
-
-const themePalette = mode === 'light' ? light : dark;
-
-const theme = createTheme({
-  palette: {
-    mode, // Define o modo, pode ser 'light' ou 'dark'
-    ...themePalette // Aplica a paleta definida com base no modo
-  },
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          boxShadow: '0 .125rem .375rem 0 rgba(115, 103, 240, .3)',
-          backgroundColor: '#7367f0',
-          color: '#fff',
-          '&:hover': {
-            backgroundColor: '#5b54c8'
+  return createTheme({
+    palette: {
+      mode, // Define o modo: 'light' ou 'dark'
+      ...themePalette
+    },
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            boxShadow: '0 .125rem .375rem 0 rgba(115, 103, 240, .3)',
+            backgroundColor: '#7367f0',
+            color: '#fff',
+            '&:hover': {
+              backgroundColor: '#5b54c8'
+            }
           }
         }
       }
     }
-  }
-});
-
-export default theme;
+  });
+};
