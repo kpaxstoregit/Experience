@@ -16,7 +16,7 @@ import {
   InputAdornment,
   IconButton
 } from '@mui/material';
-import { Email, Lock, Visibility, VisibilityOff } from '@mui/icons-material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 // Validation schema
 const loginSchema = z.object({
@@ -77,11 +77,15 @@ const LoginPage: React.FC = () => {
         className='ex-shadow'
         sx={{
           width: '100%',
-          maxWidth: 400,
-          padding: '3rem',
+          maxWidth: 460,
+          padding: '2rem',
+
           boxShadow: '0 0.1875rem 0.75rem 0 rgba(47, 43, 61, 0.14)'
         }}
       >
+        <Typography textAlign='center' fontSize='2rem' fontWeight='700' mb={3}>
+          Logo
+        </Typography>
         <CardHeader
           title='Bem vindo 👋'
           subheader='Faça login em sua conta e comece a aventura'
