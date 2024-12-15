@@ -2,7 +2,7 @@
 
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { useTheme } from '@/theme/theme';
+import { useTheme } from '@/hooks/useTheme';
 export default function EmptyLayout({
   children
 }: {

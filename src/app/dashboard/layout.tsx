@@ -10,7 +10,7 @@ import LayersIcon from '@mui/icons-material/Layers';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpen from '@mui/icons-material/MenuOpen';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useTheme } from '@/theme/theme';
+import { useTheme } from '@/hooks/useTheme';
 import '@/app/globals.css';
 import {
   AppBar,
@@ -28,9 +28,9 @@ import {
   Typography,
   useMediaQuery
 } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ColorChangeToggle from '../../../components/ColorChangeToogle';
 
 const drawerWidth = 240;
