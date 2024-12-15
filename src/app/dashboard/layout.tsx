@@ -10,7 +10,7 @@ import LayersIcon from '@mui/icons-material/Layers';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpen from '@mui/icons-material/MenuOpen';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { getTheme } from '@/theme/theme';
+import { getTheme, useTheme } from '@/theme/theme';
 import '@/app/globals.css';
 import {
   AppBar,
@@ -57,26 +57,13 @@ export default function RootLayout({
 }) {
   const isMobile = useMediaQuery('(max-width: 600px)');
 
-  const [darkMode, setDarkMode] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(true);
   const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>(
     {}
   );
 
-  // Get theme from localStorage or use system preference
-  useEffect(() => {
-    const savedMode = localStorage.getItem('theme') || 'dark';
-    setDarkMode(savedMode === 'dark');
-  }, []);
+  const { darkMode, toggleDarkMode } = useTheme();
 
-  // Toggle dark mode
-  const toggleDarkMode = () => {
-    const newMode = darkMode ? 'light' : 'dark';
-    localStorage.setItem('theme', newMode);
-    setDarkMode(!darkMode);
-  };
-
-  // Cria o tema dinamicamente com base no estado atual
   const theme = getTheme(darkMode ? 'dark' : 'light');
 
   const toggleDrawer = () => {

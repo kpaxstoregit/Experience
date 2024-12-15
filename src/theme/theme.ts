@@ -1,4 +1,6 @@
+// theme.ts
 import { createTheme } from '@mui/material/styles';
+import { useState, useEffect } from 'react';
 
 const light = {
   primary: {
@@ -28,13 +30,34 @@ const dark = {
   }
 };
 
-// Cria o tema com base no modo dinâmico
+// Hook para gerenciar o tema
+export const useTheme = () => {
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    const savedMode = localStorage.getItem('theme') || 'dark';
+    setDarkMode(savedMode === 'dark');
+  }, []);
+
+  const toggleDarkMode = () => {
+    const newMode = darkMode ? 'light' : 'dark';
+    localStorage.setItem('theme', newMode);
+    setDarkMode(!darkMode);
+  };
+
+  return {
+    darkMode,
+    toggleDarkMode
+  };
+};
+
+// Função para criar o tema com base no estado do modo
 export const getTheme = (mode: 'light' | 'dark') => {
   const themePalette = mode === 'light' ? light : dark;
 
   return createTheme({
     palette: {
-      mode, // Define o modo: 'light' ou 'dark'
+      mode,
       ...themePalette
     },
     components: {
