@@ -1,7 +1,7 @@
-// theme.ts
 import { createTheme } from '@mui/material/styles';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
+// Paletas de tema
 const light = {
   primary: {
     main: '#7367f0',
@@ -30,7 +30,7 @@ const dark = {
   }
 };
 
-// Hook para gerenciar o tema
+// Hook para gerenciar e obter o tema dinâmico
 export const useTheme = () => {
   const [darkMode, setDarkMode] = useState(false);
 
@@ -45,34 +45,30 @@ export const useTheme = () => {
     setDarkMode(!darkMode);
   };
 
-  return {
-    darkMode,
-    toggleDarkMode
-  };
-};
-
-// Função para criar o tema com base no estado do modo
-export const getTheme = (mode: 'light' | 'dark') => {
-  const themePalette = mode === 'light' ? light : dark;
-
-  return createTheme({
-    palette: {
-      mode,
-      ...themePalette
-    },
-    components: {
-      MuiButton: {
-        styleOverrides: {
-          root: {
-            boxShadow: '0 .125rem .375rem 0 rgba(115, 103, 240, .3)',
-            backgroundColor: '#7367f0',
-            color: '#fff',
-            '&:hover': {
-              backgroundColor: '#5b54c8'
+  // Memoize o tema para evitar recriações desnecessárias
+  const theme = useMemo(() => {
+    const themePalette = darkMode ? dark : light;
+    return createTheme({
+      palette: {
+        mode: darkMode ? 'dark' : 'light',
+        ...themePalette
+      },
+      components: {
+        MuiButton: {
+          styleOverrides: {
+            root: {
+              boxShadow: '0 .125rem .375rem 0 rgba(115, 103, 240, .3)',
+              backgroundColor: '#7367f0',
+              color: '#fff',
+              '&:hover': {
+                backgroundColor: '#5b54c8'
+              }
             }
           }
         }
       }
-    }
-  });
+    });
+  }, [darkMode]);
+
+  return { darkMode, toggleDarkMode, theme };
 };

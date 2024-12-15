@@ -10,7 +10,7 @@ import LayersIcon from '@mui/icons-material/Layers';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpen from '@mui/icons-material/MenuOpen';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { getTheme, useTheme } from '@/theme/theme';
+import { useTheme } from '@/theme/theme';
 import '@/app/globals.css';
 import {
   AppBar,
@@ -31,6 +31,7 @@ import {
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import ColorChangeToggle from '../../../components/ColorChangeToogle';
 
 const drawerWidth = 240;
 const collapsedDrawerWidth = 60;
@@ -62,9 +63,7 @@ export default function RootLayout({
     {}
   );
 
-  const { darkMode, toggleDarkMode } = useTheme();
-
-  const theme = getTheme(darkMode ? 'dark' : 'light');
+  const { darkMode, toggleDarkMode, theme } = useTheme();
 
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
@@ -152,9 +151,10 @@ export default function RootLayout({
                   EXP
                 </Typography>
                 <Box sx={{ flexGrow: 1 }} />
-                <IconButton onClick={toggleDarkMode} color='inherit'>
-                  {darkMode ? <LightModeIcon /> : <DarkModeIcon />}
-                </IconButton>
+                <ColorChangeToggle
+                  darkMode={darkMode}
+                  toggleDarkMode={toggleDarkMode}
+                />
               </Toolbar>
             </AppBar>
 

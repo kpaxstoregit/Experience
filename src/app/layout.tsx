@@ -2,15 +2,15 @@
 
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { getTheme } from '@/theme/theme';
+import { useTheme } from '@/theme/theme';
 export default function EmptyLayout({
   children
 }: {
   children: React.ReactNode;
 }) {
   // Cria o tema dinamicamente com base no estado atual
-  const darkMode = 'light';
-  const theme = getTheme(darkMode ? 'dark' : 'light');
+  const { theme } = useTheme();
+
   return (
     <html lang='pt-br'>
       <body>

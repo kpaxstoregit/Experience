@@ -1,13 +1,18 @@
 'use client';
-import { useContext } from 'react';
-import { IconButton } from '@mui/material';
+
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import { ThemeContext } from '@/context/ThemeContext';
+import { IconButton } from '@mui/material';
 
-const ColorChangeToggle = () => {
-  const { darkMode, toggleDarkMode } = useContext(ThemeContext);
+interface ColorChangeToggleProps {
+  toggleDarkMode: () => void;
+  darkMode: boolean;
+}
 
+const ColorChangeToggle: React.FC<ColorChangeToggleProps> = ({
+  toggleDarkMode,
+  darkMode
+}) => {
   return (
     <IconButton onClick={toggleDarkMode} color='inherit'>
       {darkMode ? <LightModeIcon /> : <DarkModeIcon />}
