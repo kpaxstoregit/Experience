@@ -145,8 +145,13 @@ const HomePage: React.FC = () => {
                 Lembrar-me
               </Typography>
             </Box>
-            <Link href='/esqueci-senha'>
-              <Typography variant='body1' color='primary'>
+            <Link href='/esqueci-senha' style={{ textDecoration: 'none' }}>
+              <Typography
+                variant='body2'
+                sx={{ textDecoration: 'none' }}
+                fontWeight={500}
+                color='primary'
+              >
                 Esqueceu a sua senha
               </Typography>
             </Link>
@@ -155,7 +160,12 @@ const HomePage: React.FC = () => {
           <Box my={2}>
             <Button
               type='submit'
-              sx={{ height: 40 }}
+              sx={{
+                height: 40,
+                textTransform: 'initial',
+                fontWeight: 600,
+                fontSize: '15px'
+              }}
               fullWidth
               variant='contained'
               color='primary'
