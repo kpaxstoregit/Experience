@@ -6,8 +6,8 @@ export default function AuthAbstracRight() {
         position: 'absolute',
         width: '238px',
         height: '233px',
-        bottom: '-110px',
-        right: '-68px'
+        bottom: '-105px',
+        right: '-62px'
       }}
       viewBox='0 0 239 234'
       fill='none'
