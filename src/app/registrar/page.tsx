@@ -1,22 +1,20 @@
 'use client';
 
-import React from 'react';
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
-  TextField,
-  Button,
   Box,
-  Typography,
-  Container,
-  Card,
+  Button,
   CardContent,
   CardHeader,
+  IconButton,
   InputAdornment,
-  IconButton
+  TextField,
+  Typography
 } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 // Validation schema
 const loginSchema = z.object({
@@ -64,100 +62,78 @@ const RegisterPage: React.FC = () => {
   };
 
   return (
-    <Container
-      maxWidth='sm'
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100vh'
-      }}
-    >
-      <Card
-        className='ex-shadow'
-        sx={{
-          width: '100%',
-          maxWidth: 460,
-          padding: '2rem',
-
-          boxShadow: '0 0.1875rem 0.75rem 0 rgba(47, 43, 61, 0.14)'
-        }}
-      >
-        <Typography textAlign='center' fontSize='2rem' fontWeight='700' mb={3}>
-          Logo
-        </Typography>
-        <CardHeader
-          title='Bem vindo 👋'
-          subheader='Faça login em sua conta e comece a aventura'
-        />
-        <CardContent>
-          <Box
-            display='flex'
-            gap={3}
-            flexDirection='column'
-            component='form'
-            onSubmit={handleSubmit(onSubmit)}
-            noValidate
-          >
-            {/* Email */}
-            <Box>
-              <Typography fontSize='0.813rem' mb={0.5} color='#444050'>
-                Email
-              </Typography>
-              <TextField
-                placeholder='Digite o seu e-mail'
-                fullWidth
-                size='small'
-                variant='outlined'
-                {...register('email')}
-                error={!!errors.email}
-                helperText={errors.email?.message}
-              />
-            </Box>
-            {/* Senha */}
-            <Box>
-              <Typography fontSize='0.813rem' mb={0.5} color='#444050'>
-                Senha
-              </Typography>
-              <TextField
-                fullWidth
-                placeholder='············'
-                size='small'
-                type={showPassword ? 'text' : 'password'}
-                variant='outlined'
-                {...register('password')}
-                error={!!errors.password}
-                helperText={errors.password?.message}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position='end'>
-                      <IconButton
-                        onClick={() => setShowPassword((prev) => !prev)}
-                        edge='end'
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  )
-                }}
-              />
-            </Box>
-            <Box my={2}>
-              <Button
-                type='submit'
-                sx={{ height: 40 }}
-                fullWidth
-                variant='contained'
-                color='primary'
-                disabled={hasInteracted && !isValid}
-              >
-                Entrar
-              </Button>
-            </Box>
+    <>
+      <CardHeader
+        title='Bem vindo 👋'
+        subheader='Faça login em sua conta e comece a aventura'
+      />
+      <CardContent>
+        <Box
+          display='flex'
+          gap={3}
+          flexDirection='column'
+          component='form'
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+        >
+          {/* Email */}
+          <Box>
+            <Typography fontSize='0.813rem' mb={0.5} color='#444050'>
+              Email
+            </Typography>
+            <TextField
+              placeholder='Digite o seu e-mail'
+              fullWidth
+              size='small'
+              variant='outlined'
+              {...register('email')}
+              error={!!errors.email}
+              helperText={errors.email?.message}
+            />
           </Box>
-        </CardContent>
-      </Card>
-    </Container>
+          {/* Senha */}
+          <Box>
+            <Typography fontSize='0.813rem' mb={0.5} color='#444050'>
+              Senha
+            </Typography>
+            <TextField
+              fullWidth
+              placeholder='············'
+              size='small'
+              type={showPassword ? 'text' : 'password'}
+              variant='outlined'
+              {...register('password')}
+              error={!!errors.password}
+              helperText={errors.password?.message}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <IconButton
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      edge='end'
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+            />
+          </Box>
+          <Box my={2}>
+            <Button
+              type='submit'
+              sx={{ height: 40 }}
+              fullWidth
+              variant='contained'
+              color='primary'
+              disabled={hasInteracted && !isValid}
+            >
+              Entrar
+            </Button>
+          </Box>
+        </Box>
+      </CardContent>
+    </>
   );
 };
 
