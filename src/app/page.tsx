@@ -7,11 +7,14 @@ import {
   Button,
   CardContent,
   CardHeader,
+  Checkbox,
   IconButton,
   InputAdornment,
   TextField,
-  Typography
+  Typography,
+  Stack
 } from '@mui/material';
+import Link from 'next/link';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -26,6 +29,7 @@ type LoginFormInputs = z.infer<typeof loginSchema>;
 
 const HomePage: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState(false);
+  const [rememberMe, setRememberMe] = React.useState(false); // Definindo o estado de 'Lembrar-me'
 
   const {
     register,
@@ -119,6 +123,35 @@ const HomePage: React.FC = () => {
               }}
             />
           </Box>
+          {/* Lembrar-me */}
+          <Stack
+            spacing={2}
+            direction={'row'}
+            justifyContent='space-between'
+            alignItems='center'
+          >
+            <Box
+              display={'flex'}
+              justifyContent={'center'}
+              my={2}
+              alignItems='center'
+            >
+              <Checkbox
+                checked={rememberMe}
+                onChange={() => setRememberMe((prev) => !prev)}
+                id='rememberMe' // ID para associar ao label
+              />
+              <Typography variant='body1' color='text.secondary'>
+                Lembrar-me
+              </Typography>
+            </Box>
+            <Link href='/esqueci-senha'>
+              <Typography variant='body1' color='primary'>
+                Esqueceu a sua senha
+              </Typography>
+            </Link>
+          </Stack>
+
           <Box my={2}>
             <Button
               type='submit'
