@@ -96,7 +96,6 @@ export default function RootLayout({
                   <List component='div' disablePadding>
                     {item.children.map((child) => (
                       <ListItem
-                        button
                         key={child.title}
                         component={Link}
                         href={child.path}
@@ -111,7 +110,7 @@ export default function RootLayout({
             );
           }
           return (
-            <ListItem button key={item.title} component={Link} href={item.path}>
+            <ListItem key={item.title} component={Link} href={item.path}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               {drawerOpen && <ListItemText primary={item.title} />}
             </ListItem>
