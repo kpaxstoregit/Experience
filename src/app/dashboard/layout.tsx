@@ -1,8 +1,8 @@
 'use client';
 
+import '@/app/globals.css';
+import { useTheme } from '@/hooks/useTheme';
 import BarChartIcon from '@mui/icons-material/BarChart';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import LightModeIcon from '@mui/icons-material/LightMode';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -10,8 +10,6 @@ import LayersIcon from '@mui/icons-material/Layers';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpen from '@mui/icons-material/MenuOpen';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useTheme } from '@/hooks/useTheme';
-import '@/app/globals.css';
 import {
   AppBar,
   Box,
