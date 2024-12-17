@@ -149,18 +149,16 @@ const HomePage: React.FC = () => {
                 onChange={() => setRememberMe((prev) => !prev)}
                 id='rememberMe' // ID para associar ao label
               />
-              <Typography variant='body1' color='text.secondary'>
-                Lembrar-me
-              </Typography>
+              <Typography fontSize='15px'>Lembrar-me</Typography>
             </Box>
             <Link href='/esqueci-senha' style={{ textDecoration: 'none' }}>
               <Typography
-                variant='body2'
-                sx={{ textDecoration: 'none' }}
+                fontSize='15px'
                 fontWeight={500}
+                sx={{ textDecoration: 'none' }}
                 color='primary'
               >
-                Esqueceu a sua senha
+                Esqueceu a senha?
               </Typography>
             </Link>
           </Stack>
@@ -180,6 +178,13 @@ const HomePage: React.FC = () => {
           >
             Entrar
           </Button>
+
+          <Box display={'flex'} justifyContent={'center'} gap='6px'>
+            <Typography fontSize={'15px'}>Novo na Plataforma?</Typography>
+            <Link href='/registrar' style={{ textDecoration: 'none' }}>
+              <Typography color='primary'>Criar uma conta</Typography>
+            </Link>
+          </Box>
         </Box>
       </CardContent>
     </>
