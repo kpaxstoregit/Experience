@@ -1,4 +1,7 @@
 // theme.ts
+import '@fontsource/public-sans/400.css'; // Regular
+import '@fontsource/public-sans/600.css'; // Semi-bold
+import '@fontsource/public-sans/700.css'; // Bold
 import { createTheme } from '@mui/material/styles';
 
 // Paletas de cores
@@ -38,6 +41,9 @@ export const getTheme = (mode: 'light' | 'dark') => {
     palette: {
       mode,
       ...themePalette
+    },
+    typography: {
+      fontFamily: 'Public Sans, Roboto, sans-serif'
     },
     components: {
       MuiButton: {
