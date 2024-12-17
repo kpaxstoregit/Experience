@@ -54,7 +54,7 @@ export default function EmptyLayout({
               >
                 <Typography
                   textAlign='center'
-                  fontSize='2rem'
+                  fontSize='1.4rem'
                   fontWeight='700'
                   mb={3}
                   color='primary.main'

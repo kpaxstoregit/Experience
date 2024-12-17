@@ -70,8 +70,16 @@ const HomePage: React.FC = () => {
       <CardHeader
         title='Bem vindo 👋'
         subheader='Faça login em sua conta e comece a aventura'
+        titleTypographyProps={{
+          mb: 0.5,
+          fontWeight: 500
+        }}
+        subheaderTypographyProps={{
+          maxWidth: '80%',
+          fontSize: '15px' // Define 15 pixels para o subheader
+        }}
       />
-      <CardContent>
+      <CardContent sx={{ pt: 1 }}>
         <Box
           display='flex'
           gap={3}
@@ -82,7 +90,7 @@ const HomePage: React.FC = () => {
         >
           {/* Email */}
           <Box>
-            <Typography fontSize='0.813rem' mb={0.5} color='#444050'>
+            <Typography fontSize='0.8125rem' mb={0.5} color='#444050'>
               Email
             </Typography>
             <TextField
@@ -157,23 +165,21 @@ const HomePage: React.FC = () => {
             </Link>
           </Stack>
 
-          <Box my={2}>
-            <Button
-              type='submit'
-              sx={{
-                height: 40,
-                textTransform: 'initial',
-                fontWeight: 600,
-                fontSize: '15px'
-              }}
-              fullWidth
-              variant='contained'
-              color='primary'
-              disabled={hasInteracted && !isValid}
-            >
-              Entrar
-            </Button>
-          </Box>
+          <Button
+            type='submit'
+            sx={{
+              height: 40,
+              textTransform: 'initial',
+              fontWeight: 600,
+              fontSize: '15px'
+            }}
+            fullWidth
+            variant='contained'
+            color='primary'
+            disabled={hasInteracted && !isValid}
+          >
+            Entrar
+          </Button>
         </Box>
       </CardContent>
     </>
