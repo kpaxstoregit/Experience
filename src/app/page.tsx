@@ -90,7 +90,7 @@ const HomePage: React.FC = () => {
         >
           {/* Email */}
           <Box>
-            <Typography fontSize='0.8125rem' mb={0.5} color='#444050'>
+            <Typography fontSize='0.8125rem' mb={0.5}>
               Email
             </Typography>
             <TextField
@@ -105,7 +105,7 @@ const HomePage: React.FC = () => {
           </Box>
           {/* Senha */}
           <Box>
-            <Typography fontSize='0.813rem' mb={0.5} color='#444050'>
+            <Typography fontSize='0.813rem' mb={0.5}>
               Senha
             </Typography>
             <TextField
