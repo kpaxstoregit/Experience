@@ -1,5 +1,6 @@
 'use client';
 
+import { auth } from '@/lib/firebase';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
@@ -14,29 +15,52 @@ import {
   Typography,
   Stack
 } from '@mui/material';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import Link from 'next/link';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-// Validation schema
-const registerSchema = z.object({
-  email: z.string().email('E-mail inválido'),
-  password: z.string().min(6, 'A senha deve ter pelo menos 6 caracteres')
-});
+// Regex para validação de senha
+const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/;
 
-type LoginFormInputs = z.infer<typeof registerSchema>;
+// Validation schema
+const registerSchema = z
+  .object({
+    email: z.string().email('E-mail inválido'),
+    password: z
+      .string()
+      .min(8, 'A senha deve ter pelo menos 8 caracteres')
+      .regex(
+        passwordRegex,
+        'A senha deve ter 1 letra maiúscula e 1 caractere especial'
+      ),
+    confirmPassword: z
+      .string()
+      .min(8, 'A senha deve ter pelo menos 8 caracteres')
+      .regex(
+        passwordRegex,
+        'A senha deve ter 1 letra maiúscula e 1 caractere especial'
+      )
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'As senhas não coincidem',
+    path: ['confirmPassword'] // Aplica o erro ao campo 'confirmPassword'
+  });
+
+type RegisterFormInputs = z.infer<typeof registerSchema>;
 
 const RegisterPage: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState(false);
-  const [rememberMe, setRememberMe] = React.useState(false); // Definindo o estado de 'Lembrar-me'
+  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+  const [rememberMe, setRememberMe] = React.useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
     watch
-  } = useForm<LoginFormInputs>({
+  } = useForm<RegisterFormInputs>({
     resolver: zodResolver(registerSchema),
     mode: 'onChange'
   });
@@ -44,24 +68,19 @@ const RegisterPage: React.FC = () => {
   const formValues = watch();
   const hasInteracted = Object.values(formValues).some((value) => value !== '');
 
-  const onSubmit = async (data: LoginFormInputs) => {
+  const onSubmit = async (data: RegisterFormInputs) => {
     try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-
-      if (!response.ok) {
-        throw new Error('Erro ao fazer login');
-      }
-
-      const result = await response.json();
-      console.log('Login bem-sucedido!', result);
-      alert('Login bem-sucedido!');
-    } catch (error) {
-      console.error('Erro ao fazer login:', error);
-      alert('Erro ao fazer login. Tente novamente.');
+      // Firebase Signup
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+      console.log('Usuário registrado com sucesso:', userCredential.user);
+      alert('Cadastro realizado com sucesso!');
+    } catch (error: any) {
+      console.error('Erro ao registrar usuário:', error.message);
+      alert('Erro ao realizar cadastro: ' + error.message);
     }
   };
 
@@ -140,19 +159,19 @@ const RegisterPage: React.FC = () => {
               fullWidth
               placeholder='············'
               size='small'
-              type={showPassword ? 'text' : 'password'}
+              type={showConfirmPassword ? 'text' : 'password'}
               variant='outlined'
-              {...register('password')}
-              error={!!errors.password}
-              helperText={errors.password?.message}
+              {...register('confirmPassword')}
+              error={!!errors.confirmPassword}
+              helperText={errors.confirmPassword?.message}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position='end'>
                     <IconButton
-                      onClick={() => setShowPassword((prev) => !prev)}
+                      onClick={() => setShowConfirmPassword((prev) => !prev)}
                       edge='end'
                     >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                      {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
                 )
