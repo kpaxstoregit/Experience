@@ -4,9 +4,11 @@ import AuthAbstracLeft from '@/assets/svg/AuthAbstractLeft';
 import AuthAbstracRight from '@/assets/svg/AuthAbstractRight';
 import { AuthProvider } from '@/context/AuthContext';
 import { useTheme } from '@/hooks/useTheme';
-import { Card, Container, Typography, Box, Paper } from '@mui/material';
+import { Card, Container, Typography, Box } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function EmptyLayout({
   children
@@ -72,6 +74,17 @@ export default function EmptyLayout({
                 </Box>
               </Container>
             </Box>
+            {/* Configuração do ToastContainer */}
+            <ToastContainer
+              position='top-right' // Posição dos toasts
+              autoClose={5000} // Duração de 5 segundos
+              hideProgressBar={false} // Barra de progresso visível
+              newestOnTop={true} // Sempre mostra os novos toasts em cima
+              closeOnClick={true} // Permite fechar o toast ao clicar
+              rtl={false} // Direção da animação
+              pauseOnFocusLoss={false} // Não pausa se a página perde o foco
+              draggable={false} // Desabilita a funcionalidade de arrastar
+            />
           </AuthProvider>
         </ThemeProvider>
       </body>

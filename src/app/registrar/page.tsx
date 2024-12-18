@@ -3,6 +3,7 @@
 import { auth } from '@/lib/firebase';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { toast } from 'react-toastify';
 import {
   Box,
   Button,
@@ -13,7 +14,8 @@ import {
   InputAdornment,
   TextField,
   Typography,
-  Stack
+  Stack,
+  CircularProgress
 } from '@mui/material';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import Link from 'next/link';
@@ -58,7 +60,7 @@ const RegisterPage: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
     watch
   } = useForm<RegisterFormInputs>({
     resolver: zodResolver(registerSchema),
@@ -71,16 +73,18 @@ const RegisterPage: React.FC = () => {
   const onSubmit = async (data: RegisterFormInputs) => {
     try {
       // Firebase Signup
-      const userCredential = await createUserWithEmailAndPassword(
+      const response = await createUserWithEmailAndPassword(
         auth,
         data.email,
         data.password
       );
-      console.log('Usuário registrado com sucesso:', userCredential.user);
-      alert('Cadastro realizado com sucesso!');
+      if (response.user) toast.success('Cadastro realizado! 🎉');
     } catch (error: any) {
-      console.error('Erro ao registrar usuário:', error.message);
-      alert('Erro ao realizar cadastro: ' + error.message);
+      if (error.message.includes('auth/email-already-in-use')) {
+        toast.error('Esse email já foi cadastrado');
+      } else {
+        toast.error('Erro ao cadastrar, tente novamente mais tarde');
+      }
     }
   };
 
@@ -218,7 +222,11 @@ const RegisterPage: React.FC = () => {
             color='primary'
             disabled={hasInteracted && !isValid}
           >
-            Cadastrar
+            {isSubmitting ? (
+              <CircularProgress sx={{ color: 'white' }} size={24} />
+            ) : (
+              'Cadastrar'
+            )}
           </Button>
 
           <Box
