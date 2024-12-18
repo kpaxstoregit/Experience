@@ -4,8 +4,8 @@ export const dark = {
     contrastText: '#fff'
   },
   background: {
-    default: '#272a3cff',
-    paper: '#292d48'
+    default: '#262a40ff',
+    paper: '#25293e'
   },
   text: {
     primary: '#CFCDE4',
