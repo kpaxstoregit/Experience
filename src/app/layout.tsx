@@ -52,17 +52,18 @@ export default function EmptyLayout({
                       zIndex: 10,
                       width: '100%',
                       maxWidth: 460,
-                      padding: '2rem'
+                      padding: '2.8rem 2rem'
                     }}
                   >
                     <Typography
                       textAlign='center'
-                      fontSize='1.4rem'
+                      fontSize='2rem'
                       fontWeight='700'
                       mb={3}
-                      color='primary.main'
+                      color='text.primary'
+                      letterSpacing={1.8}
                     >
-                      Logo
+                      Login
                     </Typography>
                     {children}
                   </Card>
