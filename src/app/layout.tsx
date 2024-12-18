@@ -63,7 +63,7 @@ export default function EmptyLayout({
                       color='text.primary'
                       letterSpacing={1.8}
                     >
-                      Login
+                      Experience
                     </Typography>
                     {children}
                   </Card>

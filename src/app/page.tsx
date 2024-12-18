@@ -76,7 +76,7 @@ const HomePage: React.FC = () => {
         }}
         subheaderTypographyProps={{
           maxWidth: '80%',
-          fontSize: '15px' // Define 15 pixels para o subheader
+          fontSize: '15px'
         }}
       />
       <CardContent sx={{ pt: 1 }}>
@@ -165,12 +165,6 @@ const HomePage: React.FC = () => {
 
           <Button
             type='submit'
-            sx={{
-              height: 40,
-              textTransform: 'initial',
-              fontWeight: 600,
-              fontSize: '15px'
-            }}
             fullWidth
             variant='contained'
             color='primary'
