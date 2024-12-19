@@ -1,7 +1,6 @@
 'use client';
 
 import '@/app/globals.css';
-import useAuthGuard from '@/hooks/useAuthGuard';
 import { useTheme } from '@/hooks/useTheme';
 import { useAuthStore } from '@/store/authStore';
 import BarChartIcon from '@mui/icons-material/BarChart';
@@ -35,6 +34,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import Link from 'next/link';
 import { useState } from 'react';
 import ColorChangeToggle from '../../../components/ColorChangeToogle';
+import { useRouter } from 'next/navigation';
 
 const drawerWidth = 240;
 const collapsedDrawerWidth = 60;
@@ -62,11 +62,15 @@ export default function RootLayout({
   const isMobile = useMediaQuery('(max-width: 600px)');
 
   const { initializeAuthState, user, logout } = useAuthStore();
-  useAuthGuard();
+  const router = useRouter(); // Usado para redirecionar o usuário para a página de login caso ele não esteja logado
 
   useEffect(() => {
-    initializeAuthState(); // Inicializa o estado de autenticação quando o componente carregar
-  }, [initializeAuthState]);
+    initializeAuthState();
+    const storedUser = localStorage.getItem('user');
+    if (!storedUser) {
+      router.push('/'); // Se não tiver user no localStorage, redireciona para a página de login
+    }
+  }, [initializeAuthState, router]);
 
   // Caso o usuário não esteja logado, redireciona para a página de login
 
