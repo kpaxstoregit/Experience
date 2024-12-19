@@ -11,7 +11,8 @@ import LayersIcon from '@mui/icons-material/Layers';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpen from '@mui/icons-material/MenuOpen';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import React, { useEffect } from 'react';
+import React from 'react';
+import useAuthVerify from '@/hooks/useVerifyAuth';
 
 import {
   AppBar,
@@ -32,9 +33,9 @@ import {
 } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import ColorChangeToggle from '../../../components/ColorChangeToogle';
-import { useRouter } from 'next/navigation';
 
 const drawerWidth = 240;
 const collapsedDrawerWidth = 60;
@@ -64,13 +65,7 @@ export default function RootLayout({
   const { initializeAuthState, user, logout } = useAuthStore();
   const router = useRouter(); // Usado para redirecionar o usuário para a página de login caso ele não esteja logado
 
-  useEffect(() => {
-    initializeAuthState();
-    const storedUser = localStorage.getItem('user');
-    if (!storedUser) {
-      router.push('/'); // Se não tiver user no localStorage, redireciona para a página de login
-    }
-  }, [initializeAuthState, router]);
+  useAuthVerify();
 
   // Caso o usuário não esteja logado, redireciona para a página de login
 

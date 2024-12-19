@@ -18,7 +18,7 @@ import {
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import React, { use, useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -49,7 +49,6 @@ const HomePage: React.FC = () => {
 
   // Pegando as funções e o estado da store
   const { login } = useAuthStore();
-  const router = useRouter();
 
   // Call on Silence 😎 - ZUSTAND STORE
   const onSubmit = async (data: LoginFormInputs) => {
