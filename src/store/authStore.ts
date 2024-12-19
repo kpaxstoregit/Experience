@@ -95,9 +95,11 @@ export const useAuthStore = create<AuthState>((set) => {
 
         toast.success('Logout realizado com sucesso!');
         window.location.href = '/';
-      } catch (error: string) {
-        console.error('Erro ao fazer logout:', error.message);
-        toast.error('Erro ao fazer logout: ' + error.message);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.error('Erro ao fazer logout:', error.message);
+          toast.error('Erro ao fazer logout: ' + error.message);
+        }
       }
     },
 
