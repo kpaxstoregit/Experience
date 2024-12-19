@@ -74,12 +74,12 @@ export const useAuthStore = create<AuthState>((set) => {
       } catch (error: unknown) {
         if (error instanceof Error) {
           let errorMessage = 'Erro ao fazer login. Tente novamente.';
-          if (error.code === 'auth/invalid-credential') {
+          if (error.message === 'auth/invalid-credential') {
             errorMessage =
               'Credenciais inválidas. Verifique seu e-mail e senha.';
-          } else if (error.code === 'auth/user-not-found') {
+          } else if (error.message === 'auth/user-not-found') {
             errorMessage = 'Usuário não encontrado. Verifique seu e-mail.';
-          } else if (error.code === 'auth/wrong-password') {
+          } else if (error.message === 'auth/wrong-password') {
             errorMessage = 'Senha incorreta. Tente novamente.';
           }
 
