@@ -1,5 +1,5 @@
 'use client';
-
+import { useAuthStore } from '@/store/authStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
@@ -10,9 +10,9 @@ import {
   Checkbox,
   IconButton,
   InputAdornment,
+  Stack,
   TextField,
-  Typography,
-  Stack
+  Typography
 } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
@@ -44,25 +44,12 @@ const HomePage: React.FC = () => {
   const formValues = watch();
   const hasInteracted = Object.values(formValues).some((value) => value !== '');
 
+  // Pegando as funções e o estado da store
+  const { login } = useAuthStore();
+
+  // Call on Silence 😎 - ZUSTAND STORE
   const onSubmit = async (data: LoginFormInputs) => {
-    try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-
-      if (!response.ok) {
-        throw new Error('Erro ao fazer login');
-      }
-
-      const result = await response.json();
-      console.log('Login bem-sucedido!', result);
-      alert('Login bem-sucedido!');
-    } catch (error) {
-      console.error('Erro ao fazer login:', error);
-      alert('Erro ao fazer login. Tente novamente.');
-    }
+    await login(data.email, data.password);
   };
 
   return (

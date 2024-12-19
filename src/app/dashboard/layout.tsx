@@ -1,7 +1,9 @@
 'use client';
 
 import '@/app/globals.css';
+import React, { useEffect } from 'react';
 import { useTheme } from '@/hooks/useTheme';
+import { useAuthStore } from '@/store/authStore';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ExpandLess from '@mui/icons-material/ExpandLess';
@@ -10,9 +12,12 @@ import LayersIcon from '@mui/icons-material/Layers';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpen from '@mui/icons-material/MenuOpen';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import useAuthGuard from '@/hooks/useAuthGuard';
+
 import {
   AppBar,
   Box,
+  Button,
   Collapse,
   CssBaseline,
   Divider,
@@ -55,6 +60,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const isMobile = useMediaQuery('(max-width: 600px)');
+
+  const { initializeAuthState, user, logout } = useAuthStore();
+  useAuthGuard();
+
+  useEffect(() => {
+    initializeAuthState(); // Inicializa o estado de autenticação quando o componente carregar
+  }, [initializeAuthState]);
+
+  // Caso o usuário não esteja logado, redireciona para a página de login
 
   const [drawerOpen, setDrawerOpen] = useState(true);
   const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>(
@@ -147,11 +161,31 @@ export default function RootLayout({
                 <Typography variant='h5' fontWeight='800'>
                   EXP
                 </Typography>
+
                 <Box sx={{ flexGrow: 1 }} />
+                <Box>
+                  <Typography
+                    variant='h6'
+                    fontWeight='700'
+                    color='primary'
+                    my={2}
+                  >
+                    {' '}
+                    {user?.email}{' '}
+                  </Typography>
+                </Box>
                 <ColorChangeToggle
                   darkMode={darkMode}
                   toggleDarkMode={toggleDarkMode}
                 />
+                <Button
+                  sx={{ ml: 1 }}
+                  variant='text'
+                  color='secondary'
+                  onClick={logout}
+                >
+                  Sair
+                </Button>
               </Toolbar>
             </AppBar>
 

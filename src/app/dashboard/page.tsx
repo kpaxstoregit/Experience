@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Box,
   Button,
@@ -7,7 +9,6 @@ import {
   Stack,
   Typography
 } from '@mui/material';
-
 export default function Home() {
   const resumeCards = [
     { id: 1, title: 'Restantes', content: '4', icon: '' },
