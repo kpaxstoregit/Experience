@@ -2,6 +2,7 @@
 
 import '@/app/globals.css';
 import { useTheme } from '@/hooks/useTheme';
+import useAuthVerify from '@/hooks/useVerifyAuth';
 import { useAuthStore } from '@/store/authStore';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -12,7 +13,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpen from '@mui/icons-material/MenuOpen';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import React from 'react';
-import useAuthVerify from '@/hooks/useVerifyAuth';
 
 import {
   AppBar,
@@ -33,7 +33,6 @@ import {
 } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import ColorChangeToggle from '../../../components/ColorChangeToogle';
 
@@ -100,7 +99,7 @@ export default function RootLayout({
             const isOpen = expandedMenus[item.title] || false;
             return (
               <div key={item.title}>
-                <ListItem button onClick={() => toggleSubMenu(item.title)}>
+                <ListItem onClick={() => toggleSubMenu(item.title)}>
                   <ListItemIcon>{item.icon}</ListItemIcon>
                   {drawerOpen && <ListItemText primary={item.title} />}
                   {isOpen ? <ExpandLess /> : <ExpandMore />}
@@ -123,10 +122,10 @@ export default function RootLayout({
             );
           }
           return (
-            <ListItem key={item.title} component={Link} href={item.path}>
+            <Link key={item.title} component={Link} href={item.path}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               {drawerOpen && <ListItemText primary={item.title} />}
-            </ListItem>
+            </Link>
           );
         })}
       </List>

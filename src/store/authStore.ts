@@ -71,7 +71,7 @@ export const useAuthStore = create<AuthState>((set) => {
         });
         toast.success('Login efetuado com sucesso! 🎉');
         window.location.href = '/dashboard';
-      } catch (error: any) {
+      } catch (error: string) {
         let errorMessage = 'Erro ao fazer login. Tente novamente.';
         if (error.code === 'auth/invalid-credential') {
           errorMessage = 'Credenciais inválidas. Verifique seu e-mail e senha.';
@@ -92,7 +92,7 @@ export const useAuthStore = create<AuthState>((set) => {
 
         toast.success('Logout realizado com sucesso!');
         window.location.href = '/';
-      } catch (error: any) {
+      } catch (error: string) {
         console.error('Erro ao fazer logout:', error.message);
         toast.error('Erro ao fazer logout: ' + error.message);
       }

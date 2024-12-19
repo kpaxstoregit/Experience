@@ -79,7 +79,7 @@ const RegisterPage: React.FC = () => {
         data.password
       );
       if (response.user) toast.success('Cadastro realizado! 🎉');
-    } catch (error: any) {
+    } catch (error: string) {
       if (error.message.includes('auth/email-already-in-use')) {
         toast.error('Esse email já foi cadastrado');
       } else {
