@@ -1,4 +1,4 @@
-import { initializeApp, cert } from 'firebase-admin/app';
+import { initializeApp, cert, ServiceAccount } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 
 // Configuração do Firebase diretamente no código
@@ -19,7 +19,7 @@ const serviceAccount = {
   universe_domain: 'googleapis.com'
 };
 const app = initializeApp({
-  credential: cert(serviceAccount),
+  credential: cert(serviceAccount as ServiceAccount),
   projectId: 'gerenciador-pessoal-6ea59'
 });
 

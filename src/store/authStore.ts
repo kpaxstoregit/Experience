@@ -71,17 +71,20 @@ export const useAuthStore = create<AuthState>((set) => {
         });
         toast.success('Login efetuado com sucesso! 🎉');
         window.location.href = '/dashboard';
-      } catch (error: string) {
-        let errorMessage = 'Erro ao fazer login. Tente novamente.';
-        if (error.code === 'auth/invalid-credential') {
-          errorMessage = 'Credenciais inválidas. Verifique seu e-mail e senha.';
-        } else if (error.code === 'auth/user-not-found') {
-          errorMessage = 'Usuário não encontrado. Verifique seu e-mail.';
-        } else if (error.code === 'auth/wrong-password') {
-          errorMessage = 'Senha incorreta. Tente novamente.';
-        }
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          let errorMessage = 'Erro ao fazer login. Tente novamente.';
+          if (error.code === 'auth/invalid-credential') {
+            errorMessage =
+              'Credenciais inválidas. Verifique seu e-mail e senha.';
+          } else if (error.code === 'auth/user-not-found') {
+            errorMessage = 'Usuário não encontrado. Verifique seu e-mail.';
+          } else if (error.code === 'auth/wrong-password') {
+            errorMessage = 'Senha incorreta. Tente novamente.';
+          }
 
-        toast.error(errorMessage);
+          toast.error(errorMessage);
+        }
       }
     },
 

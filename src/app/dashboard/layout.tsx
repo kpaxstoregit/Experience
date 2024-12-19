@@ -40,8 +40,8 @@ const drawerWidth = 240;
 const collapsedDrawerWidth = 60;
 
 const NAVIGATION = [
-  { title: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
-  { title: 'Orders', icon: <ShoppingCartIcon />, path: '/orders' },
+  { title: 'Dashboard', icon: <DashboardIcon />, route: '/dashboard' },
+  { title: 'Orders', icon: <ShoppingCartIcon />, route: '/orders' },
   { kind: 'divider' },
   {
     title: 'Analytics',
@@ -122,9 +122,11 @@ export default function RootLayout({
             );
           }
           return (
-            <Link key={item.title} component={Link} href={item.path}>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              {drawerOpen && <ListItemText primary={item.title} />}
+            <Link key={item.title} href=''>
+              <ListItem>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                {drawerOpen && <ListItemText primary={item.title} />}
+              </ListItem>
             </Link>
           );
         })}
