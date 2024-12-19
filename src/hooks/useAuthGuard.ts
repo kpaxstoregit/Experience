@@ -9,9 +9,14 @@ const useAuthGuard = () => {
   const { user, initializeAuthState } = useAuthStore();
 
   useEffect(() => {
-    initializeAuthState();
+    initializeAuthState(); // aqui eu uso a funcao que fiz para inicializar o estado do auth la na authStore
+
+    if (user) {
+      router.push('/'); // Redireciona para a página inicial caso ele não esteja logado
+    }
+
     if (!user) {
-      router.push('/'); // Redireciona para a página inicial
+      router.push('/'); // Redireciona para a página inicial caso ele não esteja logado
     }
   }, [user, initializeAuthState, router]);
 

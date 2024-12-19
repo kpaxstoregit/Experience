@@ -8,6 +8,7 @@ import {
   CardContent,
   CardHeader,
   Checkbox,
+  CircularProgress,
   IconButton,
   InputAdornment,
   Stack,
@@ -15,7 +16,9 @@ import {
   Typography
 } from '@mui/material';
 import Link from 'next/link';
-import React from 'react';
+import { useRouter } from 'next/navigation';
+
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -34,7 +37,7 @@ const HomePage: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
     watch
   } = useForm<LoginFormInputs>({
     resolver: zodResolver(loginSchema),
@@ -157,7 +160,11 @@ const HomePage: React.FC = () => {
             color='primary'
             disabled={hasInteracted && !isValid}
           >
-            Entrar
+            {isSubmitting ? (
+              <CircularProgress sx={{ color: 'white' }} size={24} />
+            ) : (
+              'Entrar'
+            )}
           </Button>
 
           <Box display={'flex'} justifyContent={'center'} gap='6px'>

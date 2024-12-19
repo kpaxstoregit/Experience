@@ -70,9 +70,18 @@ export const useAuthStore = create<AuthState>((set) => {
           email: loggedInUser.email
         });
         toast.success('Login efetuado com sucesso! 🎉');
+        window.location.href = '/dashboard';
       } catch (error: any) {
-        console.error('Erro ao fazer login:', error.message);
-        toast.error('Erro ao fazer login: ' + error.message);
+        let errorMessage = 'Erro ao fazer login. Tente novamente.';
+        if (error.code === 'auth/invalid-credential') {
+          errorMessage = 'Credenciais inválidas. Verifique seu e-mail e senha.';
+        } else if (error.code === 'auth/user-not-found') {
+          errorMessage = 'Usuário não encontrado. Verifique seu e-mail.';
+        } else if (error.code === 'auth/wrong-password') {
+          errorMessage = 'Senha incorreta. Tente novamente.';
+        }
+
+        toast.error(errorMessage);
       }
     },
 

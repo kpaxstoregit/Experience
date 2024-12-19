@@ -1,7 +1,7 @@
 'use client';
 
 import '@/app/globals.css';
-import React, { useEffect } from 'react';
+import useAuthGuard from '@/hooks/useAuthGuard';
 import { useTheme } from '@/hooks/useTheme';
 import { useAuthStore } from '@/store/authStore';
 import BarChartIcon from '@mui/icons-material/BarChart';
@@ -12,7 +12,7 @@ import LayersIcon from '@mui/icons-material/Layers';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpen from '@mui/icons-material/MenuOpen';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import useAuthGuard from '@/hooks/useAuthGuard';
+import React, { useEffect } from 'react';
 
 import {
   AppBar,
@@ -33,7 +33,7 @@ import {
 } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ColorChangeToggle from '../../../components/ColorChangeToogle';
 
 const drawerWidth = 240;
