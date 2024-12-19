@@ -62,8 +62,8 @@ export default function RootLayout({
 }) {
   const isMobile = useMediaQuery('(max-width: 600px)');
 
-  const { initializeAuthState, user, logout } = useAuthStore();
-  const router = useRouter(); // Usado para redirecionar o usuário para a página de login caso ele não esteja logado
+  const { user, logout } = useAuthStore();
+  // Usado para redirecionar o usuário para a página de login caso ele não esteja logado
 
   useAuthVerify();
 

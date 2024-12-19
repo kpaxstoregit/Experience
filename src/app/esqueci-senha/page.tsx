@@ -1,18 +1,13 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
   Box,
   Button,
   CardContent,
   CardHeader,
-  Checkbox,
-  IconButton,
-  InputAdornment,
   TextField,
-  Typography,
-  Stack
+  Typography
 } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
@@ -25,18 +20,15 @@ const registerSchema = z.object({
   password: z.string().min(6, 'A senha deve ter pelo menos 6 caracteres')
 });
 
-type LoginFormInputs = z.infer<typeof registerSchema>;
+type ForgotPasswordFormInputs = z.infer<typeof registerSchema>;
 
-const RegisterPage: React.FC = () => {
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [rememberMe, setRememberMe] = React.useState(false); // Definindo o estado de 'Lembrar-me'
-
+const ForgotPasswordPage: React.FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
     watch
-  } = useForm<LoginFormInputs>({
+  } = useForm<ForgotPasswordFormInputs>({
     resolver: zodResolver(registerSchema),
     mode: 'onChange'
   });
@@ -44,7 +36,7 @@ const RegisterPage: React.FC = () => {
   const formValues = watch();
   const hasInteracted = Object.values(formValues).some((value) => value !== '');
 
-  const onSubmit = async (data: LoginFormInputs) => {
+  const onSubmit = async (data: ForgotPasswordFormInputs) => {
     try {
       const response = await fetch('/api/login', {
         method: 'POST',
@@ -126,4 +118,4 @@ const RegisterPage: React.FC = () => {
   );
 };
 
-export default RegisterPage;
+export default ForgotPasswordPage;
