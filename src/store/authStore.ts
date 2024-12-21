@@ -56,7 +56,6 @@ export const useAuthStore = create<AuthState>((set) => {
 
   return {
     user: null,
-
     login: async (email, password) => {
       try {
         const userCredential = await signInWithEmailAndPassword(

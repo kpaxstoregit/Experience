@@ -1,0 +1,18 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Concluir relatório financeiro",
+      "description": "Finalizar o relatório e enviá-lo até sexta-feira.",
+      "status": "pending",
+      "priority": "high"
+    },
+    {
+      "id": 2,
+      "title": "Atualizar site corporativo",
+      "description": "Incluir novas informações na página de 'Sobre'.",
+      "status": "completed",
+      "priority": "medium"
+    }
+  ]
+}
