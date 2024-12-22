@@ -13,6 +13,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpen from '@mui/icons-material/MenuOpen';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import React from 'react';
+import { preload, SWRConfig } from 'swr';
+import { collection } from 'firebase/firestore';
 
 import {
   AppBar,
@@ -35,6 +37,8 @@ import { ThemeProvider } from '@mui/material/styles';
 import Link from 'next/link';
 import { useState } from 'react';
 import ColorChangeToggle from '../../../components/ColorChangeToogle';
+import { getDocs } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 const drawerWidth = 240;
 const collapsedDrawerWidth = 60;
@@ -62,8 +66,8 @@ export default function RootLayout({
   const isMobile = useMediaQuery('(max-width: 600px)');
 
   const { user, logout } = useAuthStore();
-  // Usado para redirecionar o usuário para a página de login caso ele não esteja logado
 
+  // Usado para redirecionar o usuário para a página de login caso ele não esteja logado
   useAuthVerify();
 
   // Caso o usuário não esteja logado, redireciona para a página de login
@@ -85,6 +89,18 @@ export default function RootLayout({
       [menu]: !prev[menu]
     }));
   };
+
+  // Função para buscar as tarefas
+  const fetchTasks = async (): Promise<Task[]> => {
+    const querySnapshot = await getDocs(collection(db, 'tasks'));
+    return querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data()
+    })) as Task[];
+  };
+
+  //recurso do swr para pre-carregar
+  preload('tasks', fetchTasks);
 
   const drawer = (
     <div>
@@ -138,91 +154,98 @@ export default function RootLayout({
     <html lang='pt-br'>
       <body>
         <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Box sx={{ display: 'flex' }}>
-            {/* AppBar */}
-            <AppBar
-              position='fixed'
-              color='default'
-              sx={{
-                zIndex: (theme) => theme.zIndex.drawer + 1
-              }}
-            >
-              <Toolbar>
-                <IconButton
-                  color='inherit'
-                  aria-label='open drawer'
-                  edge='start'
-                  onClick={toggleDrawer}
-                  sx={{ mr: 2 }}
-                >
-                  <>{drawerOpen ? <MenuOpen /> : <MenuIcon />}</>
-                </IconButton>
-                <Typography variant='h5' fontWeight='800'>
-                  EXP
-                </Typography>
-
-                <Box sx={{ flexGrow: 1 }} />
-                <Box>
-                  <Typography
-                    variant='h6'
-                    fontWeight='700'
-                    color='primary'
-                    my={2}
+          <SWRConfig
+            value={{
+              // Configurações globais do SWR
+              fetcher: (url) => fetch(url).then((res) => res.json())
+            }}
+          >
+            <CssBaseline />
+            <Box sx={{ display: 'flex' }}>
+              {/* AppBar */}
+              <AppBar
+                position='fixed'
+                color='default'
+                sx={{
+                  zIndex: (theme) => theme.zIndex.drawer + 1
+                }}
+              >
+                <Toolbar>
+                  <IconButton
+                    color='inherit'
+                    aria-label='open drawer'
+                    edge='start'
+                    onClick={toggleDrawer}
+                    sx={{ mr: 2 }}
                   >
-                    {' '}
-                    {user?.email}{' '}
+                    <>{drawerOpen ? <MenuOpen /> : <MenuIcon />}</>
+                  </IconButton>
+                  <Typography variant='h5' fontWeight='800'>
+                    EXP
                   </Typography>
-                </Box>
-                <ColorChangeToggle
-                  darkMode={darkMode}
-                  toggleDarkMode={toggleDarkMode}
-                />
-                <Button
-                  sx={{ ml: 1 }}
-                  variant='text'
-                  color='secondary'
-                  onClick={logout}
-                >
-                  Sair
-                </Button>
-              </Toolbar>
-            </AppBar>
 
-            {/* Drawer */}
-            <Drawer
-              variant={isMobile ? 'temporary' : 'permanent'}
-              open={drawerOpen}
-              sx={{
-                width: drawerOpen ? drawerWidth : collapsedDrawerWidth,
-                flexShrink: 0,
-                '& .MuiDrawer-paper': {
+                  <Box sx={{ flexGrow: 1 }} />
+                  <Box>
+                    <Typography
+                      variant='h6'
+                      fontWeight='700'
+                      color='primary'
+                      my={2}
+                    >
+                      {' '}
+                      {user?.email}{' '}
+                    </Typography>
+                  </Box>
+                  <ColorChangeToggle
+                    darkMode={darkMode}
+                    toggleDarkMode={toggleDarkMode}
+                  />
+                  <Button
+                    sx={{ ml: 1 }}
+                    variant='text'
+                    color='secondary'
+                    onClick={logout}
+                  >
+                    Sair
+                  </Button>
+                </Toolbar>
+              </AppBar>
+
+              {/* Drawer */}
+              <Drawer
+                variant={isMobile ? 'temporary' : 'permanent'}
+                open={drawerOpen}
+                sx={{
                   width: drawerOpen ? drawerWidth : collapsedDrawerWidth,
-                  transition: 'width 0.32s',
-                  overflowX: 'hidden'
-                }
-              }}
-            >
-              {drawer}
-            </Drawer>
+                  flexShrink: 0,
+                  '& .MuiDrawer-paper': {
+                    width: drawerOpen ? drawerWidth : collapsedDrawerWidth,
+                    transition: 'width 0.32s',
+                    overflowX: 'hidden'
+                  }
+                }}
+              >
+                {drawer}
+              </Drawer>
 
-            {/* Main Content */}
-            <Box
-              bgcolor={'#F8F7FA'}
-              minHeight={'100vh'}
-              component='main'
-              sx={{
-                flexGrow: 1,
-                width: `calc(100% - ${
-                  drawerOpen ? drawerWidth : collapsedDrawerWidth
-                }px)`,
-                transition: 'margin-left 0.3s'
-              }}
-            >
-              <Toolbar />
-              {children}
+              {/* Main Content */}
+              <Box
+                bgcolor={'#F8F7FA'}
+                minHeight={'100vh'}
+                component='main'
+                sx={{
+                  flexGrow: 1,
+                  width: `calc(100% - ${
+                    drawerOpen ? drawerWidth : collapsedDrawerWidth
+                  }px)`,
+                  transition: 'margin-left 0.3s'
+                }}
+              >
+                <Toolbar />
+                {children}
+              </Box>
             </Box>
-          </Box>
+          </SWRConfig>
         </ThemeProvider>
       </body>
     </html>
