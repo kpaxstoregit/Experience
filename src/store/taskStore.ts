@@ -10,7 +10,7 @@ import {
 import { db } from '@/lib/firebase';
 
 interface Task {
-  id?: string; // Firestore gera IDs únicos automaticamente
+  id: string; // Firestore gera IDs únicos automaticamente
   title: string;
   description: string;
   status: string;
@@ -24,7 +24,7 @@ interface TaskState {
   fetchTasks: () => Promise<void>;
   addTask: (newTask: Task) => Promise<void>;
   updateTask: (updatedTask: Task) => Promise<void>;
-  deleteTask: (id: string) => Promise<void>;
+  deleteTask?: (id: string) => Promise<void>;
 }
 
 export const useTaskStore = create<TaskState>((set) => ({
@@ -48,9 +48,14 @@ export const useTaskStore = create<TaskState>((set) => ({
 
   addTask: async (newTask) => {
     try {
-      const docRef = await addDoc(collection(db, 'tasks'), newTask);
+      const docRef = await addDoc(collection(db, 'tasks'), {
+        title: newTask.title,
+        description: newTask.description,
+        status: newTask.status,
+        priority: newTask.priority
+      }); // O Firestore gera o ID automaticamente
       set((state) => ({
-        tasks: [...state.tasks, { ...newTask, id: docRef.id }]
+        tasks: [...state.tasks, { ...newTask, id: docRef.id }] // Adiciona o ID gerado pelo Firestore ao estado
       }));
     } catch (err) {
       set({ error: (err as Error).message });
@@ -72,15 +77,17 @@ export const useTaskStore = create<TaskState>((set) => ({
     }
   },
 
-  deleteTask: async (id) => {
+  deleteTask: async (id: string) => {
+    set({ isLoading: true, error: null });
     try {
-      const taskRef = doc(db, 'tasks', id);
-      await deleteDoc(taskRef);
+      const taskRef = doc(db, 'tasks', id); // Obtenha a referência do documento
+      await deleteDoc(taskRef); // Apague o documento
       set((state) => ({
-        tasks: state.tasks.filter((task) => task.id !== id)
+        tasks: state.tasks.filter((task) => task.id !== id), // Atualize a lista de tarefas
+        isLoading: false
       }));
     } catch (err) {
-      set({ error: (err as Error).message });
+      set({ error: (err as Error).message, isLoading: false });
     }
   }
 }));

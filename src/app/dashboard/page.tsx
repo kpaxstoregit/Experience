@@ -95,12 +95,13 @@ export default function Home() {
           {paginatedTasks.map((task) => (
             <Grid item xs={12} key={task.id}>
               <Card>
+                {JSON.stringify(task)}
                 <CardContent>
                   <Typography variant='h6'>{task.title}</Typography>
                   <Typography>{task.description}</Typography>
                   <Typography>Status: {task.status}</Typography>
                   <Typography>Prioridade: {task.priority}</Typography>
-                  <Button color='error' onClick={() => deleteTask(task.id)}>
+                  <Button color='error' onClick={() => deleteTask(task?.id)}>
                     Excluir
                   </Button>
                 </CardContent>
