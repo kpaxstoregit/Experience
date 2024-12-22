@@ -57,7 +57,12 @@ export const useApi = (collectionName: string) => {
     isValidating: loading
   } = useSWR(
     collectionName, // A chave para o SWR agora é a coleção dinâmica
-    () => get(collectionName) // Passa a coleção dinâmica para a função get
+
+    () => get(collectionName), // Passa a coleção dinâmica para a função get
+    {
+      revalidateOnFocus: false, // Desativa a revalidação ao focar na página
+      revalidateOnReconnect: false // Desativa a revalidação ao reconectar à internet
+    }
   );
 
   return {

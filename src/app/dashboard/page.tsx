@@ -43,7 +43,7 @@ export default function Home() {
   const tasksPerPage = 5; // Número de tarefas por página
 
   // Invocando o hook de API (ele vai gerenciar o GET automaticamente)
-  const { post, del, data: tasks = [] } = useApi('tasks');
+  const { data: tasks = [], post, del } = useApi('tasks');
 
   // Função para adicionar uma nova tarefa
   const handleAddTask = async () => {
