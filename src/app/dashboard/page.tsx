@@ -16,6 +16,7 @@ import {
 import { collection, doc, getDocs } from 'firebase/firestore';
 import { useState } from 'react';
 import { mutate, preload } from 'swr';
+import DashboardStatus from './components/DashboardStatus';
 
 interface Task {
   id: string;
@@ -34,7 +35,7 @@ const fetchTasks = async (): Promise<Task[]> => {
   })) as Task[];
 };
 
-//recurso do swr para pre-carregar
+//Recurso do swr para pre-carregar
 preload('tasks', fetchTasks);
 
 // Componente principal
@@ -70,53 +71,35 @@ export default function Home() {
     );
   };
 
-  // Paginação: divide as tarefas em páginas
   const paginatedTasks = tasks.slice(
     (currentPage - 1) * tasksPerPage,
     currentPage * tasksPerPage
   );
 
+  // Status das tarefas
+  const tasksStatusItems = [
+    {
+      id: '1',
+      title: 'Restantes',
+      content: tasks.filter((t) => t.status === 'Pendente').length
+    },
+    {
+      id: '2',
+      title: 'Completas',
+      content: tasks.filter((t) => t.status === 'Completa').length
+    },
+    {
+      id: '3',
+      title: 'Em andamento',
+      content: tasks.filter((t) => t.status === 'Em andamento').length
+    }
+  ];
+
   return (
     <Paper elevation={0} sx={{ minHeight: '100vh', justifyContent: 'center' }}>
       <Stack className='width-default'>
-        <Box
-          display={'flex'}
-          justifyContent={'space-between'}
-          alignItems={'center'}
-          mb={2}
-        >
-          <Typography variant='h5'>Gerenciamento de Tarefas</Typography>
-          <Button variant='contained' color='primary' onClick={handleAddTask}>
-            Adicionar Tarefa
-          </Button>
-        </Box>
-
         {/* Cards Resumo */}
-        <Grid container spacing={2} mb={2}>
-          {[
-            {
-              title: 'Restantes',
-              content: tasks.filter((t) => t.status === 'Pendente').length
-            },
-            {
-              title: 'Completas',
-              content: tasks.filter((t) => t.status === 'Completa').length
-            },
-            {
-              title: 'Em andamento',
-              content: tasks.filter((t) => t.status === 'Em andamento').length
-            }
-          ].map((card, index) => (
-            <Grid item xs={12} sm={4} md={3} key={index}>
-              <Card>
-                <CardContent>
-                  <Typography variant='h6'>{card.title}</Typography>
-                  <Typography variant='h4'>{card.content}</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+        <DashboardStatus tasksStatus={tasksStatusItems} />
 
         {/* Lista de Tarefas */}
         <Grid container spacing={2}>
