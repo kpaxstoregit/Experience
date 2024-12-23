@@ -29,6 +29,8 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Paper,
+  Stack,
   Toolbar,
   Typography,
   useMediaQuery
@@ -156,7 +158,6 @@ export default function RootLayout({
         <ThemeProvider theme={theme}>
           <SWRConfig
             value={{
-              // Configurações globais do SWR
               fetcher: (url) => fetch(url).then((res) => res.json())
             }}
           >
@@ -242,7 +243,15 @@ export default function RootLayout({
                 }}
               >
                 <Toolbar />
-                {children}
+                <Paper
+                  elevation={0}
+                  sx={{ minHeight: '100vh', justifyContent: 'center' }}
+                >
+                  <Stack maxWidth={'1392px'} margin={'0 auto'}>
+                    {/* Utilizado o main pra manter a constancia da semantica */}
+                    <main>{children}</main>
+                  </Stack>
+                </Paper>
               </Box>
             </Box>
           </SWRConfig>

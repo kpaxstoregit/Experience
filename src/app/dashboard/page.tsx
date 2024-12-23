@@ -96,42 +96,35 @@ export default function Home() {
   ];
 
   return (
-    <Paper elevation={0} sx={{ minHeight: '100vh', justifyContent: 'center' }}>
-      <Stack className='width-default'>
-        {/* Cards Resumo */}
-        <DashboardStatus tasksStatus={tasksStatusItems} />
+    <main>
+      {/* Resumo das Tarefas */}
+      <DashboardStatus tasksStatus={tasksStatusItems} />
 
-        {/* Lista de Tarefas */}
-        <Grid container spacing={2}>
-          {paginatedTasks.map((task) => (
-            <Grid item xs={12} key={task.id}>
-              <Card>
-                <CardContent>
-                  <Typography variant='h6'>{task.title}</Typography>
-                  <Typography>{task.description}</Typography>
-                  <Typography>Status: {task.status}</Typography>
-                  <Typography>Prioridade: {task.priority}</Typography>
-                  <Button
-                    color='error'
-                    onClick={() => handleDeleteTask(task.id)}
-                  >
-                    Excluir
-                  </Button>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-
-        {/* Paginação */}
-        <Box mt={4} display={'flex'} justifyContent={'center'}>
-          <Pagination
-            count={Math.ceil(tasks.length / tasksPerPage)}
-            page={currentPage}
-            onChange={(_, page) => setCurrentPage(page)}
-          />
-        </Box>
-      </Stack>
-    </Paper>
+      {/* Lista de Tarefas */}
+      <Grid container spacing={2}>
+        {paginatedTasks.map((task) => (
+          <Grid item xs={12} key={task.id}>
+            <Card>
+              <CardContent>
+                <Typography variant='h6'>{task.title}</Typography>
+                <Typography>{task.description}</Typography>
+                <Typography>Status: {task.status}</Typography>
+                <Typography>Prioridade: {task.priority}</Typography>
+                <Button color='error' onClick={() => handleDeleteTask(task.id)}>
+                  Excluir
+                </Button>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+      {/* Paginação */}
+      <Pagination
+        sx={{ m: '1.125rem auto' }}
+        count={Math.ceil(tasks.length / tasksPerPage)}
+        page={currentPage}
+        onChange={(_, page) => setCurrentPage(page)}
+      />
+    </main>
   );
 }
