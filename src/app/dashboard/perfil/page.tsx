@@ -1,9 +1,8 @@
 'use client';
+
 import { useApi } from '@/hooks/useApi';
-import { Box, Card, Grid, Typography } from '@mui/material';
-import Image from 'next/image';
+import { Avatar, Box, Card, Grid, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import avatarHero from '@/public/images/heros/hank_strider.jpg';
 
 interface Hero {
   id?: string;
@@ -40,11 +39,11 @@ export default function HeroGallery() {
 
   return (
     <>
-      <Box textAlign='left' mt={4} p={4}>
-        <Typography variant='h3' color='white' fontWeight='bold' gutterBottom>
-          SELECIONE O SEU HERÓI
+      <Box textAlign='left' mt={3}>
+        <Typography variant='h5' color='white' fontWeight='bold' gutterBottom>
+          Selecione o seu Heroi
         </Typography>
-        <Typography variant='body1' fontWeight='bold' gutterBottom>
+        <Typography variant='body2' fontWeight='semibold' mb={3}>
           Cada herói tem uma profissão específica, procure se especializar em
           alguma delas 🤖
         </Typography>
@@ -52,57 +51,52 @@ export default function HeroGallery() {
 
         <Box>
           {hoveredCharacter && !loading && (
-            <Card
-              sx={{
-                height: '400px',
-                borderRadius: '8px',
-                width: '100%',
-                padding: '2rem',
-                marginBottom: '1.5rem',
-                color: 'white',
-                display: 'inline-block'
-              }}
-            >
-              <Box display='flex' width={'100%'} gap={3}>
-                <Box
-                  style={{
-                    borderRadius: '100px',
-                    boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.2)',
-                    backgroundImage: `url(${avatarHero.src})`, // Usando a imagem como fundo
-                    backgroundSize: 'cover', // Faz a imagem cobrir todo o elemento
-                    backgroundPosition: 'center', // Centraliza a imagem
-                    width: '200px',
-                    height: '200px', // Definindo uma altura
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white'
+            <Card>
+              <Box
+                display='flex'
+                alignItems={'center'}
+                width={'100%'}
+                gap={3}
+                p={2}
+              >
+                <Avatar
+                  variant='square'
+                  alt='Travis Howard'
+                  src={hoveredCharacter.avatar}
+                  sx={{
+                    width: 250,
+                    height: 300,
+                    borderRadius: '4px',
+                    boxShadow: '0px 8px 15px rgba(34, 16, 58, 0.2)',
+                    border: '4px solid rgba(81, 29, 148, 0.2)'
                   }}
-                ></Box>
-                <Box maxWidth={'80%'}>
-                  <Typography variant='h2' fontWeight='bold' mb={1}>
+                />
+                <Box maxWidth={'500px'} ml={2}>
+                  <Typography variant='h3' fontWeight='bold' mb={1}>
                     {hoveredCharacter.name}
                   </Typography>
-                  <Typography variant='h6'>
+                  <Typography variant='h6' color='primary'>
                     {hoveredCharacter.profession}
                   </Typography>
-                  <Typography variant='h6' mb={3}>
+                  <Typography variant='body1' mb={3}>
                     {hoveredCharacter.descriptionLong}
                   </Typography>
-                  <Typography variant='h6'>{hoveredCharacter.prase}</Typography>
+                  <Typography variant='body1' color='primary'>
+                    "{hoveredCharacter.prase}"
+                  </Typography>
                 </Box>
               </Box>
             </Card>
           )}
           {!loading && (
-            <Grid container spacing={3} justifyContent='center'>
+            <Grid container gap={3} justifyContent='center' mt={5}>
               {heros.map((character) => (
                 <Grid
                   item
                   key={character.id}
                   onMouseEnter={() => handleMouseEnter(character.id)}
                   sx={{
-                    transition: 'transform 0.3s ease',
+                    transition: 'transform 0.4s ease',
                     transform:
                       hoveredId === character.id ? 'scale(1.1)' : 'scale(1)',
                     '&:hover': {
@@ -110,35 +104,28 @@ export default function HeroGallery() {
                     }
                   }}
                 >
-                  <Card
+                  <Box
                     sx={{
                       position: 'relative',
-                      width: 150,
-                      height: 150,
                       borderRadius: '8px',
-                      overflow: 'hidden',
-                      boxShadow:
-                        hoveredId === character.id
-                          ? '0px 8px 15px rgba(0, 0, 0, 0.2)'
-                          : 'none'
+                      overflow: 'hidden'
                     }}
                   >
-                    <Box
-                      style={{
-                        backgroundImage: `url(${avatarHero.src})`, // Usando a imagem como fundo
-                        backgroundSize: 'cover', // Faz a imagem cobrir todo o elemento
-                        backgroundPosition: 'center', // Centraliza a imagem
-                        width: '100%',
-                        height: '100%', // Definindo uma altura
-                        borderRadius: '8px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: 'white',
-                        padding: '1rem'
+                    <Avatar
+                      alt='Travis Howard'
+                      src={character?.avatar}
+                      sx={{
+                        width: '150px',
+                        height: '150px',
+
+                        boxShadow:
+                          hoveredId === character.id
+                            ? '0px 8px 15px rgba(0, 0, 0, 0.2)'
+                            : 'none'
                       }}
-                    ></Box>
-                  </Card>
+                    />
+                  </Box>
+
                   <Typography variant='body1' mt={1} color='white'>
                     {character?.name}
                   </Typography>

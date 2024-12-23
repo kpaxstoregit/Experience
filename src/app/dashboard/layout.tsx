@@ -41,23 +41,23 @@ import { useState } from 'react';
 import ColorChangeToggle from '../../../components/ColorChangeToogle';
 import { getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { PrecisionManufacturingOutlined } from '@mui/icons-material';
 
 const drawerWidth = 240;
 const collapsedDrawerWidth = 60;
 
 const NAVIGATION = [
   { title: 'Dashboard', icon: <DashboardIcon />, route: '/dashboard' },
-  { title: 'Orders', icon: <ShoppingCartIcon />, route: '/orders' },
+
   { kind: 'divider' },
   {
     title: 'Analytics',
     icon: <BarChartIcon />,
     children: [
-      { title: 'Sales', path: '/analytics/sales' },
-      { title: 'Traffic', path: '/analytics/traffic' }
+      { title: 'Perfil', path: '/dashboard/perfil' },
+      { title: 'Configurações', path: '/dashboard/configuracoes' }
     ]
-  },
-  { title: 'Integrations', icon: <LayersIcon />, path: '/integrations' }
+  }
 ];
 
 export default function RootLayout({
@@ -247,7 +247,7 @@ export default function RootLayout({
                   elevation={0}
                   sx={{ minHeight: '100vh', justifyContent: 'center' }}
                 >
-                  <Stack maxWidth={'1392px'} margin={'0 auto'}>
+                  <Stack maxWidth={'lg'} margin={'0 auto'}>
                     {/* Utilizado o main pra manter a constancia da semantica */}
                     <main>{children}</main>
                   </Stack>
