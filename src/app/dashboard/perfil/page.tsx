@@ -3,6 +3,17 @@
 import React, { useState } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 import Image from 'next/image';
+import { collection, doc, getDocs } from 'firebase/firestore';
+import { useApi } from '@/hooks/useApi';
+
+interface Heros {
+  id: string;
+  name: string;
+  role: string;
+  profession: string;
+  attributes: string;
+  img: string;
+}
 
 // Lista de personagens
 const characters = [
@@ -26,13 +37,14 @@ const characters = [
 ];
 
 // Galeria de personagens
-export default function HeroGallery() {
-  // Inicializa o estado com o primeiro personagem selecionado
-  const [hoveredId, setHoveredId] = useState<number | null>(
-    characters[0]?.id || null
+export default function Perfil() {
+  const { data: heros = [] } = useApi('heros');
+
+  const [hoveredId, setHoveredId] = useState<string | null>(
+    heros[0]?.id || null
   );
 
-  const handleMouseEnter = (id: number) => {
+  const handleMouseEnter = (id: string) => {
     setHoveredId(id);
   };
 
@@ -48,6 +60,7 @@ export default function HeroGallery() {
         alguma delas 🤖
       </Typography>
 
+      {/* <pre>{JSON.stringify(heros, null, 2)}</pre> */}
       {/* Detalhes do personagem no hover */}
       {hoveredCharacter && (
         <Box
