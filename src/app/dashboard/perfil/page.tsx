@@ -40,16 +40,16 @@ const characters = [
 export default function Perfil() {
   const { data: heros = [] } = useApi('heros');
 
-  const [hoveredId, setHoveredId] = useState<string | null>(
-    heros[0]?.id || null
+  // Inicializa o estado com o primeiro personagem selecionado
+  const [hoveredName, setHoveredName] = useState<string | null>(
+    characters[0]?.name || null
   );
 
-  const handleMouseEnter = (id: string) => {
-    setHoveredId(id);
+  const handleMouseEnter = (name: string) => {
+    setHoveredName(name);
   };
 
-  const hoveredCharacter = characters.find((char) => char.id === hoveredId);
-
+  const hoveredCharacter = characters.find((char) => char.name === hoveredName);
   return (
     <Box textAlign='left' mt={4} p={4}>
       <Typography variant='h3' color='white' fontWeight='bold' gutterBottom>
@@ -90,10 +90,11 @@ export default function Perfil() {
           <Grid
             item
             key={character.id}
-            onMouseEnter={() => handleMouseEnter(character.id)}
+            onMouseEnter={() => handleMouseEnter(character.name)}
             sx={{
               transition: 'transform 0.3s ease',
-              transform: hoveredId === character.id ? 'scale(1.1)' : 'scale(1)',
+              transform:
+                hoveredName === character.name ? 'scale(1.1)' : 'scale(1)',
               '&:hover': {
                 cursor: 'pointer'
               }
@@ -107,7 +108,7 @@ export default function Perfil() {
                 borderRadius: '8px',
                 overflow: 'hidden',
                 boxShadow:
-                  hoveredId === character.id
+                  hoveredName === character.name
                     ? '0px 8px 15px rgba(0, 0, 0, 0.2)'
                     : 'none'
               }}
