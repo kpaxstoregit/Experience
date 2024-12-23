@@ -40,13 +40,15 @@ export default function HeroGallery() {
   return (
     <>
       <Box textAlign='left' mt={3}>
-        <Typography variant='h5' color='white' fontWeight='bold' gutterBottom>
-          Selecione o seu Heroi
+        <Typography
+          variant='h6'
+          color='white'
+          gutterBottom
+          sx={{ letterSpacing: '1.5px' }}
+        >
+          ESCOLHA SEU HERÓI
         </Typography>
-        <Typography variant='body2' fontWeight='semibold' mb={3}>
-          Cada herói tem uma profissão específica, procure se especializar em
-          alguma delas 🤖
-        </Typography>
+
         {/* Detalhes do personagem no hover */}
 
         <Box>
@@ -64,24 +66,24 @@ export default function HeroGallery() {
                   alt='Travis Howard'
                   src={hoveredCharacter.avatar}
                   sx={{
-                    width: 250,
-                    height: 300,
+                    width: 205,
+                    height: 250,
                     borderRadius: '4px',
                     boxShadow: '0px 8px 15px rgba(34, 16, 58, 0.2)',
                     border: '4px solid rgba(81, 29, 148, 0.2)'
                   }}
                 />
                 <Box maxWidth={'500px'} ml={2}>
-                  <Typography variant='h3' fontWeight='bold' mb={1}>
+                  <Typography variant='h5' fontWeight='bold' mb={1}>
                     {hoveredCharacter.name}
                   </Typography>
-                  <Typography variant='h6' color='primary'>
+                  <Typography variant='body1' color='primary'>
                     {hoveredCharacter.profession}
                   </Typography>
-                  <Typography variant='body1' mb={3}>
+                  <Typography variant='body2' mb={3}>
                     {hoveredCharacter.descriptionLong}
                   </Typography>
-                  <Typography variant='body1' color='primary'>
+                  <Typography variant='body2' color='primary'>
                     "{hoveredCharacter.prase}"
                   </Typography>
                 </Box>
@@ -116,7 +118,7 @@ export default function HeroGallery() {
                       alt='Travis Howard'
                       src={hero?.avatar}
                       sx={{
-                        width: '150px',
+                        width: '140px',
                         height: 'auto',
                         border:
                           hoveredId === hero.id
@@ -127,7 +129,12 @@ export default function HeroGallery() {
                     />
                   </Box>
 
-                  <Typography variant='body1' mt={1} color='white'>
+                  <Typography
+                    textAlign='center'
+                    variant='body2'
+                    mt={1}
+                    color='primary'
+                  >
                     {hero?.name}
                   </Typography>
                 </Grid>
