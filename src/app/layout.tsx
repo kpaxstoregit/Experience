@@ -9,6 +9,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useAuthVerify from '@/hooks/useVerifyAuth';
 
 export default function EmptyLayout({
   children
@@ -16,6 +17,7 @@ export default function EmptyLayout({
   children: React.ReactNode;
 }) {
   const { theme } = useTheme();
+  useAuthVerify();
 
   return (
     <html lang='pt-br'>

@@ -73,7 +73,7 @@ export default function HeroGallery() {
                     border: '4px solid rgba(81, 29, 148, 0.2)'
                   }}
                 />
-                <Box maxWidth={'500px'} ml={2}>
+                <Box maxWidth={'480px'} ml={2}>
                   <Typography variant='h5' fontWeight='bold' mb={1}>
                     {hoveredCharacter.name}
                   </Typography>

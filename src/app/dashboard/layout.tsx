@@ -8,14 +8,12 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import LayersIcon from '@mui/icons-material/Layers';
-import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpen from '@mui/icons-material/MenuOpen';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { collection } from 'firebase/firestore';
 import React from 'react';
 import { preload, SWRConfig } from 'swr';
-import { collection } from 'firebase/firestore';
 
+import { db } from '@/lib/firebase';
 import {
   AppBar,
   Box,
@@ -36,12 +34,10 @@ import {
   useMediaQuery
 } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
+import { getDocs } from 'firebase/firestore';
 import Link from 'next/link';
 import { useState } from 'react';
 import ColorChangeToggle from '../../../components/ColorChangeToogle';
-import { getDocs } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
-import { PrecisionManufacturingOutlined } from '@mui/icons-material';
 
 const drawerWidth = 240;
 const collapsedDrawerWidth = 60;
@@ -69,10 +65,7 @@ export default function RootLayout({
 
   const { user, logout } = useAuthStore();
 
-  // Usado para redirecionar o usuário para a página de login caso ele não esteja logado
   useAuthVerify();
-
-  // Caso o usuário não esteja logado, redireciona para a página de login
 
   const [drawerOpen, setDrawerOpen] = useState(true);
   const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>(
@@ -91,18 +84,6 @@ export default function RootLayout({
       [menu]: !prev[menu]
     }));
   };
-
-  // Função para buscar as tarefas
-  const fetchTasks = async (): Promise<Task[]> => {
-    const querySnapshot = await getDocs(collection(db, 'tasks'));
-    return querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data()
-    })) as Task[];
-  };
-
-  //recurso do swr para pre-carregar
-  preload('tasks', fetchTasks);
 
   const drawer = (
     <div>

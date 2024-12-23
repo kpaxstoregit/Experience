@@ -4,12 +4,11 @@ import { useApi } from '@/hooks/useApi';
 import { db } from '@/lib/firebase';
 import {
   Box,
-  Button,
   Card,
   CardContent,
   Grid,
   Pagination,
-  Paper,
+  Button,
   Stack,
   Typography
 } from '@mui/material';
@@ -98,8 +97,14 @@ export default function Home() {
   return (
     <main>
       {/* Resumo das Tarefas */}
-      <DashboardStatus tasksStatus={tasksStatusItems} />
-
+      <Box mt={3} display='flex' justifyContent='space-between'>
+        <DashboardStatus tasksStatus={tasksStatusItems} />
+        <Box>
+          <Button variant='contained' color='primary' onClick={handleAddTask}>
+            Adicionar
+          </Button>
+        </Box>
+      </Box>
       {/* Lista de Tarefas */}
       <Grid container spacing={2}>
         {paginatedTasks.map((task) => (

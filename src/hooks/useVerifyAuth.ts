@@ -15,6 +15,9 @@ const useVerifyAuth = () => {
     if (!storedUser) {
       router.push('/'); // Se não tiver user no localStorage, redireciona para a página de login
     }
+    if (storedUser) {
+      router.push('/dashboard'); // Se não tiver user no localStorage, redireciona para a página de login
+    }
   }, [initializeAuthState, router]);
 };
 
