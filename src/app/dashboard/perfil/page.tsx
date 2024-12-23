@@ -90,15 +90,16 @@ export default function HeroGallery() {
           )}
           {!loading && (
             <Grid container gap={3} justifyContent='center' mt={5}>
-              {heros.map((character) => (
+              {heros.map((hero) => (
                 <Grid
                   item
-                  key={character.id}
-                  onMouseEnter={() => handleMouseEnter(character.id)}
+                  key={hero.id}
+                  onMouseEnter={() => handleMouseEnter(hero.id)}
                   sx={{
-                    transition: 'transform 0.4s ease',
+                    transition: 'transform 0.4s ease, filter 0.4s ease',
                     transform:
-                      hoveredId === character.id ? 'scale(1.1)' : 'scale(1)',
+                      hoveredId === hero.id ? 'scale(1.1)' : 'scale(1)',
+                    filter: hoveredId !== hero.id ? 'grayscale(100%)' : 'none',
                     '&:hover': {
                       cursor: 'pointer'
                     }
@@ -113,21 +114,21 @@ export default function HeroGallery() {
                   >
                     <Avatar
                       alt='Travis Howard'
-                      src={character?.avatar}
+                      src={hero?.avatar}
                       sx={{
                         width: '150px',
-                        height: '150px',
-
-                        boxShadow:
-                          hoveredId === character.id
-                            ? '0px 8px 15px rgba(0, 0, 0, 0.2)'
-                            : 'none'
+                        height: 'auto',
+                        border:
+                          hoveredId === hero.id
+                            ? '2px solid #512D94'
+                            : '2px solid transparent',
+                        transition: 'border 0.4s ease'
                       }}
                     />
                   </Box>
 
                   <Typography variant='body1' mt={1} color='white'>
-                    {character?.name}
+                    {hero?.name}
                   </Typography>
                 </Grid>
               ))}
